@@ -1,0 +1,59 @@
+name: digital_clock
+description: Digital clock.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_clock_helper:
+    path: ../flutter_clock_helper
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: PressStart2P
+      fonts:
+        - asset: third_party/PressStart2P-Regular.ttf
+    - family: KronaOne
+      fonts:
+        - asset: third_party/KronaOne-Regular.ttf
+    - family: DancingScript2
+      fonts:
+        - asset: third_party/DancingScript-SemiBold.ttf
+    - family: Exo2
+      fonts:
+        - asset: third_party/Exo2-SemiBold.ttf
+    - family: JosefinSans
+      fonts:
+        - asset: third_party/JosefinSans-Regular.ttf
+        - asset: third_party/JosefinSans-SemiBold.ttf
+          weight: 600
+        - asset: third_party/JosefinSans-Bold.ttf
+          weight: 700
+        - asset: third_party/JosefinSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: third_party/JosefinSans-Italic.ttf
+          style: italic
+        - asset: third_party/JosefinSans-Light.ttf
+          weight: 300
+        - asset: third_party/JosefinSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: third_party/JosefinSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: third_party/JosefinSans-Thin.ttf
+          weight: 100
+        - asset: third_party/JosefinSans-ThinItalic.ttf
+          weight: 100
+          style: italic
+   
