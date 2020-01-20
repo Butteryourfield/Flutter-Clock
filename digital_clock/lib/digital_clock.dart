@@ -8,6 +8,7 @@ import 'dart:math' as math;
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 enum _Element {
   background,
@@ -23,8 +24,8 @@ final _lightTheme = {
 
 final _darkTheme = {
   _Element.background: Colors.black,
-  _Element.text: Colors.blueGrey[200],
-  _Element.shadow: Color(0xFF174EA6),
+  _Element.text: Colors.blueGrey[100],
+  _Element.shadow: Colors.lightBlue,
 };
 
 
@@ -42,10 +43,17 @@ class _DigitalClockState extends State<DigitalClock> {
   Timer _timer;
   double opacityLevel = 1.0;
   
+  // Golden Ratio Rectangles
+  final rect1 = Rect.fromCenter(center: Offset(484,484), width: 966, height: 966);
+  final rect2 = Rect.fromCenter(center: Offset(0,299), width: 598, height: 598);
+  final rect3 = Rect.fromCenter(center: Offset(0,0), width: 370, height: 370);
+
   var _temperature = '';
   var _temperatureRange = '';
   var _condition = '';
   var _location = '';
+  IconData icon;
+  Color iconColour;
 
   @override
   void initState() {
@@ -72,16 +80,39 @@ class _DigitalClockState extends State<DigitalClock> {
     super.dispose();
   }
   
-   void _changeOpacity() {
+  void _changeOpacitySeconds() {
     setState(() => opacityLevel = opacityLevel == 0.8 ? 1.0 : 0.8);
   }
 
   void _updateModel() {
     setState(() {
+      _location = widget.model.location;
       _temperature = widget.model.temperatureString;
       _temperatureRange = '(${widget.model.low} - ${widget.model.highString})';
       _condition = widget.model.weatherString;
-      _location = widget.model.location;
+
+    if(_condition == 'sunny') {
+      icon = WeatherIcons.day_sunny;
+      iconColour = Colors.yellow;
+    } else if(_condition == 'cloudy') {
+      icon = WeatherIcons.cloudy;
+      iconColour = Colors.grey[600];
+    } else if(_condition == 'foggy') {
+      icon = WeatherIcons.fog;
+      iconColour = Colors.grey[600];
+    } else if(_condition == 'rainy') {
+      icon = WeatherIcons.rain;
+      iconColour = Colors.grey[600];
+    } else if(_condition == 'thunderstorm') {
+      icon = WeatherIcons.lightning;
+      iconColour = Colors.purple[300];
+    } else if(_condition == 'windy') {
+      icon = WeatherIcons.strong_wind;
+      iconColour = Colors.grey[600];
+    } else if(_condition == 'snowy') {
+      icon = WeatherIcons.snow;
+      iconColour = Colors.white;
+    }
     });
   }
 
@@ -107,7 +138,7 @@ class _DigitalClockState extends State<DigitalClock> {
 
   @override
   Widget build(BuildContext context) {
-    _changeOpacity();
+    _changeOpacitySeconds();
     final colors = Theme.of(context).brightness == Brightness.light
         ? _lightTheme
         : _darkTheme;
@@ -115,11 +146,9 @@ class _DigitalClockState extends State<DigitalClock> {
         DateFormat(widget.model.is24HourFormat ? 'HH' : 'h').format(_dateTime);
     final minute = DateFormat('mm').format(_dateTime);
     final second = DateFormat('ss').format(_dateTime);
-
-    // Golden Ratio Rectangles
-    final rect1 = Rect.fromCenter(center: Offset(484,484), width: 966, height: 966);
-    final rect2 = Rect.fromCenter(center: Offset(0,299), width: 598, height: 598);
-    final rect3 = Rect.fromCenter(center: Offset(0,0), width: 370, height: 370);
+    
+    final hourTypeTag = widget.model.is24HourFormat ? '24H' : DateFormat('a').format(_dateTime);
+    final date = DateFormat.yMMMMd("en_US").format(_dateTime);
 
     var defaultStyle = TextStyle(
       color: colors[_Element.text],
@@ -127,37 +156,47 @@ class _DigitalClockState extends State<DigitalClock> {
       fontWeight: FontWeight.w600,
       height: 0.9,
       fontSize: 10,
-      // fontStyle: FontStyle.italic,
-    
+      decorationThickness: 1,
       shadows: [
         Shadow(
           blurRadius: 2,
-          color: colors[_Element.shadow],
-          offset: Offset(0.2, 0.2),
+          color: colors[_Element.shadow].withOpacity(0.6),
+          offset: Offset(0.15, 0.15),
         ),
-        
       ],
     );
+
     final weatherInfo = DefaultTextStyle(
-      style: defaultStyle,
+      style: defaultStyle.apply(color: Colors.indigo[300]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(''),
+          Text(''),
           Text(_temperature, style: TextStyle(fontSize: 30)),
-          // Text(_temperatureRange),
           Text(_location,  style: TextStyle(fontSize: 20)),
         ],
       ),
     );
 
-
-
     return Stack(
       children: <Widget>[
         Container(
-          
           color: colors[_Element.background]
-          
+        ),
+        Positioned(
+          width: 100,
+          height: 70,
+          bottom: -20,
+          left: 230,
+          child: Text(hourTypeTag, style: defaultStyle.apply(fontSizeFactor: 3.5, color: Colors.indigo[300])),
+        ),
+        Positioned(
+          width: 330,
+          height: 70,
+          bottom: 145,
+          right: 0,
+          child: Text(date, style: defaultStyle.apply(fontSizeFactor: 3, color: Colors.indigo[300]), textAlign: TextAlign.center),
         ),
         Positioned(
           width: 483,
@@ -165,16 +204,15 @@ class _DigitalClockState extends State<DigitalClock> {
           bottom: 0,
           left: 12,
           child: CustomPaint(
-            // child: Text(hour, style: defaultStyle.apply(fontSizeFactor: 50)),
             child: FittedBox(
-          
+              fit: BoxFit.fill,
               child: Text(
                 hour, 
                 style: defaultStyle.apply(
-                  decoration: TextDecoration.underline, 
-                  decorationColor: Colors.blueGrey[400],
-                  // decorationStyle: TextDecorationStyle.wavy)
-                ),
+                  // decoration: TextDecoration.underline,
+                  // decorationThicknessFactor: 0.3,
+                  // decorationColor: defaultStyle.color.withOpacity(0.6),
+                  )
               ),
             ),
             painter: _SwirlPainter(
@@ -197,10 +235,9 @@ class _DigitalClockState extends State<DigitalClock> {
               child: Text(
                 minute,
                 style: defaultStyle.apply(
-                  decoration: TextDecoration.underline, 
-                  decorationColor: Colors.blueGrey[400],
-                  // decorationStyle: TextDecorationStyle.dotted
-                ),
+                // decoration: TextDecoration.underline,
+                // decorationThicknessFactor: 0.3,
+                )
               ),
             ),
             painter: _SwirlPainter(
@@ -224,11 +261,11 @@ class _DigitalClockState extends State<DigitalClock> {
                 duration: Duration(milliseconds: 900),
                 opacity: opacityLevel,
                 curve: Curves.easeOutQuart,
-                child: Text(second, style: defaultStyle)
-              )
+                child: Text(second, style: defaultStyle.apply(color: Colors.indigo[300])),
+              ),
             ),
             painter: _SwirlPainter(
-              lineWidth: 8.4,
+              lineWidth: 8.8,
               startAngle: 0,
               sweepAngle: math.pi/2,
               rect: rect3,
@@ -248,13 +285,13 @@ class _DigitalClockState extends State<DigitalClock> {
         Positioned(
           width: 71,
           height: 71,
-          bottom: 114,
+          bottom: 123,
           left: 495,
           child: FittedBox(
             fit: BoxFit.contain,
             child: Icon(
-              Icons.wb_sunny,
-              color: Colors.yellow,
+              icon,
+              color: iconColour,
             ),
           ),
         ),

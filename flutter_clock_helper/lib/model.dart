@@ -35,7 +35,7 @@ class ClockModel extends ChangeNotifier {
   /// Current temperature string, for example '22°C'.
   get temperature => _convertFromCelsius(_temperature);
   // Stored in degrees celsius, and converted based on the current unit setting
-  num _temperature = 22.0;
+  num _temperature = 22;
   set temperature(num temperature) {
     temperature = _convertToCelsius(temperature);
     if (temperature != _temperature) {
