@@ -286,18 +286,17 @@ class _DigitalClockState extends State<DigitalClock> {
                 curve: Curves.easeOutQuart,
                 child: Text(
                   second,
-                  style:
-                      defaultStyle.apply(color: colors[_Element.shadow]).merge(
-                            TextStyle(
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 2,
-                                  color: colors[_Element.text],
-                                  offset: Offset(0.15, 0.15),
-                                ),
-                              ],
-                            ),
-                          ),
+                  style: defaultStyle.apply(
+                    color: colors[_Element.shadow]).merge(TextStyle(
+                      shadows: [
+                        Shadow(
+                          blurRadius: 2,
+                          color: colors[_Element.text],
+                          offset: Offset(0.15, 0.15),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
