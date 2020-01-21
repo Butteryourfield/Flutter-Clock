@@ -20,18 +20,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: PressStart2P
-      fonts:
-        - asset: third_party/PressStart2P-Regular.ttf
-    - family: KronaOne
-      fonts:
-        - asset: third_party/KronaOne-Regular.ttf
-    - family: DancingScript2
-      fonts:
-        - asset: third_party/DancingScript-SemiBold.ttf
-    - family: Exo2
-      fonts:
-        - asset: third_party/Exo2-SemiBold.ttf
     - family: JosefinSans
       fonts:
         - asset: third_party/JosefinSans-Regular.ttf
