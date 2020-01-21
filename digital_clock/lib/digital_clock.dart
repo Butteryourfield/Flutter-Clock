@@ -24,10 +24,9 @@ final _lightTheme = {
 
 final _darkTheme = {
   _Element.background: Colors.black,
-  _Element.text: Colors.blueGrey[100],
+  _Element.text: Colors.blueGrey[200],
   _Element.shadow: Colors.indigo[600],
 };
-
 
 class DigitalClock extends StatefulWidget {
   const DigitalClock(this.model);
@@ -42,11 +41,13 @@ class _DigitalClockState extends State<DigitalClock> {
   DateTime _dateTime = DateTime.now();
   Timer _timer;
   double opacityLevel = 1.0;
-  
+
   // Golden Ratio Rectangles
-  final rect1 = Rect.fromCenter(center: Offset(484,484), width: 966, height: 966);
-  final rect2 = Rect.fromCenter(center: Offset(0,299), width: 598, height: 598);
-  final rect3 = Rect.fromCenter(center: Offset(0,0), width: 370, height: 370);
+  final rect1 =
+      Rect.fromCenter(center: Offset(484, 484), width: 966, height: 966);
+  final rect2 =
+      Rect.fromCenter(center: Offset(0, 299), width: 598, height: 598);
+  final rect3 = Rect.fromCenter(center: Offset(0, 0), width: 370, height: 370);
 
   var _temperature = '';
   var _temperatureRange = '';
@@ -79,7 +80,7 @@ class _DigitalClockState extends State<DigitalClock> {
     widget.model.dispose();
     super.dispose();
   }
-  
+
   void _changeOpacitySeconds() {
     setState(() => opacityLevel = opacityLevel == 0.7 ? 1.0 : 0.7);
   }
@@ -91,28 +92,28 @@ class _DigitalClockState extends State<DigitalClock> {
       _temperatureRange = '(${widget.model.low} - ${widget.model.highString})';
       _condition = widget.model.weatherString;
 
-    if(_condition == 'sunny') {
-      icon = WeatherIcons.day_sunny;
-      iconColour = Colors.yellow;
-    } else if(_condition == 'cloudy') {
-      icon = WeatherIcons.cloudy;
-      iconColour = Colors.grey[600];
-    } else if(_condition == 'foggy') {
-      icon = WeatherIcons.fog;
-      iconColour = Colors.grey[600];
-    } else if(_condition == 'rainy') {
-      icon = WeatherIcons.rain;
-      iconColour = Colors.grey[600];
-    } else if(_condition == 'thunderstorm') {
-      icon = WeatherIcons.lightning;
-      iconColour = Colors.yellow;
-    } else if(_condition == 'windy') {
-      icon = WeatherIcons.strong_wind;
-      iconColour = Colors.grey[600];
-    } else if(_condition == 'snowy') {
-      icon = WeatherIcons.snow;
-      iconColour = Colors.white;
-    }
+      if (_condition == 'sunny') {
+        icon = WeatherIcons.day_sunny;
+        iconColour = Colors.yellow;
+      } else if (_condition == 'cloudy') {
+        icon = WeatherIcons.cloudy;
+        iconColour = Colors.grey[600];
+      } else if (_condition == 'foggy') {
+        icon = WeatherIcons.fog;
+        iconColour = Colors.grey[600];
+      } else if (_condition == 'rainy') {
+        icon = WeatherIcons.rain;
+        iconColour = Colors.grey[600];
+      } else if (_condition == 'thunderstorm') {
+        icon = WeatherIcons.lightning;
+        iconColour = Colors.yellow;
+      } else if (_condition == 'windy') {
+        icon = WeatherIcons.strong_wind;
+        iconColour = Colors.grey[600];
+      } else if (_condition == 'snowy') {
+        icon = WeatherIcons.snow;
+        iconColour = Colors.white;
+      }
     });
   }
 
@@ -145,7 +146,8 @@ class _DigitalClockState extends State<DigitalClock> {
         DateFormat(widget.model.is24HourFormat ? 'HH' : 'h').format(_dateTime);
     final minute = DateFormat('mm').format(_dateTime);
     final second = DateFormat('ss').format(_dateTime);
-    final hourTypeTag = widget.model.is24HourFormat ? '24H' : DateFormat('a').format(_dateTime);
+    final hourTypeTag =
+        widget.model.is24HourFormat ? '24H' : DateFormat('a').format(_dateTime);
     final date = DateFormat.yMMMMd("en_US").format(_dateTime);
 
     var defaultStyle = TextStyle(
@@ -158,7 +160,7 @@ class _DigitalClockState extends State<DigitalClock> {
       shadows: [
         Shadow(
           blurRadius: 2,
-          color: colors[_Element.shadow].withOpacity(0.5),
+          color: colors[_Element.shadow].withOpacity(0.6),
           offset: Offset(0.15, 0.15),
         ),
       ],
@@ -172,7 +174,7 @@ class _DigitalClockState extends State<DigitalClock> {
           Text(''),
           Text(''),
           Text(_temperature, style: TextStyle(fontSize: 30)),
-          Text(_location,  style: TextStyle(fontSize: 20)),
+          Text(_location, style: TextStyle(fontSize: 20)),
         ],
       ),
     );
@@ -182,16 +184,41 @@ class _DigitalClockState extends State<DigitalClock> {
     return Stack(
       children: <Widget>[
         // Background colour
-        Container(
-          color: colors[_Element.background]
-        ),
+        Container(color: colors[_Element.background]),
+        // Hour underline
+        Positioned(
+            width: 437,
+            height: 14,
+            bottom: 68,
+            left: 38,
+            child: Container(color: colors[_Element.text])),
+        Positioned(
+            width: 433,
+            height: 10,
+            bottom: 70,
+            left: 40,
+            child: Container(color: colors[_Element.shadow])),
+        // Minute underline
+        Positioned(
+            width: 284,
+            height: 11,
+            bottom: 223,
+            left: 497,
+            child: Container(color: colors[_Element.text])),
+        Positioned(
+            width: 280,
+            height: 7,
+            bottom: 225,
+            left: 499,
+            child: Container(color: colors[_Element.shadow])),
         // Hour type tag AM/PM/24H
         Positioned(
           width: 100,
           height: 70,
           bottom: -20,
           left: 230,
-          child: Text(hourTypeTag, style: defaultStyle.apply(fontSizeFactor: 3)),
+          child:
+              Text(hourTypeTag, style: defaultStyle.apply(fontSizeFactor: 3)),
         ),
         // Date
         Positioned(
@@ -199,7 +226,9 @@ class _DigitalClockState extends State<DigitalClock> {
           height: 70,
           bottom: 145,
           right: 0,
-          child: Text(date, style: defaultStyle.apply(fontSizeFactor: 2.5), textAlign: TextAlign.center),
+          child: Text(date,
+              style: defaultStyle.apply(fontSizeFactor: 2.5),
+              textAlign: TextAlign.center),
         ),
         // Hour
         Positioned(
@@ -210,20 +239,13 @@ class _DigitalClockState extends State<DigitalClock> {
           child: CustomPaint(
             child: FittedBox(
               fit: BoxFit.fill,
-              child: Text(
-                hour, 
-                style: defaultStyle.apply(
-                  decoration: TextDecoration.underline,
-                  decorationThicknessFactor: 0.3,
-                  decorationColor: colors[_Element.shadow].withOpacity(0.6),
-                  )
-              ),
+              child: Text(hour, style: defaultStyle),
             ),
             // Golden swirl painter
             painter: _SwirlPainter(
               lineWidth: 10,
               startAngle: math.pi,
-              sweepAngle: math.pi/2,
+              sweepAngle: math.pi / 2,
               rect: rect1,
               color: Color(0xFFD4AF00),
             ),
@@ -238,19 +260,12 @@ class _DigitalClockState extends State<DigitalClock> {
           child: CustomPaint(
             child: FittedBox(
               fit: BoxFit.fill,
-              child: Text(
-                minute,
-                style: defaultStyle.apply(
-                decoration: TextDecoration.underline,
-                decorationThicknessFactor: 0.3,
-                decorationColor: colors[_Element.shadow].withOpacity(0.6),
-                )
-              ),
+              child: Text(minute, style: defaultStyle),
             ),
             painter: _SwirlPainter(
               lineWidth: 9.2,
-              startAngle: math.pi*3/2,
-              sweepAngle: math.pi/2,
+              startAngle: math.pi * 3 / 2,
+              sweepAngle: math.pi / 2,
               rect: rect2,
               color: Color(0xFFD4AF00),
             ),
@@ -270,23 +285,26 @@ class _DigitalClockState extends State<DigitalClock> {
                 opacity: opacityLevel,
                 curve: Curves.easeOutQuart,
                 child: Text(
-                  second, 
-                  style: defaultStyle.apply(color: colors[_Element.shadow])
-                  .merge(TextStyle(shadows: [Shadow(
-                    blurRadius: 2,
-                    color: colors[_Element.text],
-                    offset: Offset(0.15, 0.15),
-                  ),
-                  ],
-                  ),
-                  ),
-                ), 
+                  second,
+                  style:
+                      defaultStyle.apply(color: colors[_Element.shadow]).merge(
+                            TextStyle(
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 2,
+                                  color: colors[_Element.text],
+                                  offset: Offset(0.15, 0.15),
+                                ),
+                              ],
+                            ),
+                          ),
+                ),
               ),
             ),
             painter: _SwirlPainter(
               lineWidth: 8.8,
               startAngle: 0,
-              sweepAngle: math.pi/2,
+              sweepAngle: math.pi / 2,
               rect: rect3,
               color: Color(0xFFD4AF00),
             ),
@@ -294,14 +312,13 @@ class _DigitalClockState extends State<DigitalClock> {
         ),
         // Temperature/Location info
         Positioned(
-          width: 114,
-          height: 114,
-          bottom: 0,
-          right: 197,
-          child: Container(
-            child: weatherInfo,
-          )
-        ),
+            width: 114,
+            height: 114,
+            bottom: 0,
+            right: 197,
+            child: Container(
+              child: weatherInfo,
+            )),
         // Weather Icon
         Positioned(
           width: 71,
@@ -322,7 +339,6 @@ class _DigitalClockState extends State<DigitalClock> {
 }
 
 class _SwirlPainter extends CustomPainter {
-
   _SwirlPainter({
     @required this.lineWidth,
     @required this.startAngle,
@@ -347,13 +363,12 @@ class _SwirlPainter extends CustomPainter {
       ..strokeWidth = lineWidth
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
-    
+
     canvas.drawArc(rect, startAngle, sweepAngle, useCenter, linePaint);
-    
   }
+
   @override
   bool shouldRepaint(_SwirlPainter oldDelegate) {
-    return oldDelegate.lineWidth != lineWidth ||
-        oldDelegate.color != color;
+    return oldDelegate.lineWidth != lineWidth || oldDelegate.color != color;
   }
 }
