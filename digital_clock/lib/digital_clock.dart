@@ -43,10 +43,8 @@ class _DigitalClockState extends State<DigitalClock> {
   double opacityLevel = 1.0;
 
   // Golden Ratio Rectangles
-  final rect1 =
-      Rect.fromCenter(center: Offset(484, 484), width: 966, height: 966);
-  final rect2 =
-      Rect.fromCenter(center: Offset(0, 299), width: 598, height: 598);
+  final rect1 = Rect.fromCenter(center: Offset(484, 484), width: 966, height: 966);
+  final rect2 = Rect.fromCenter(center: Offset(0, 299), width: 598, height: 598);
   final rect3 = Rect.fromCenter(center: Offset(0, 0), width: 370, height: 370);
 
   var _temperature = '';
