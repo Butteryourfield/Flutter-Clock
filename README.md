@@ -1,4 +1,4 @@
-# Digital Flutter Clock
+# Digital Flutter Clock - Golden Ratio Design
 
 This is my flutter clock... 
 
