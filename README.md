@@ -1,8 +1,8 @@
-# Flutter Clock
+# Digital Flutter Clock
 
-This is my flutter clock...
+This is my flutter clock... 
 
-Licensed under 'Apache'
+Licensed under 'Apache License 2.0'
 
 
 Assets used...
